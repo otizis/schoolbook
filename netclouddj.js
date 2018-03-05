@@ -1,3 +1,4 @@
+$app.rotateDisabled = true;
 $ui.render({
     props: {
         title: "网易云电台"
@@ -95,9 +96,9 @@ function openURL(url, name) {
                                 +"<br><button id='play'>播放</button>"
                                 + "<input type='number' id='rate' value='1'></input>",
                             script: function () {
-                                function setPlayRate(params) {
-                                    document.getElementById("audio").playbackRate=params.rate;
-                                    document.getElementById("rate").value=params.rate;
+                                function setPlayRate(rate) {
+                                    document.getElementById("audio").playbackRate=rate;
+                                    document.getElementById("rate").value=rate;
                                 }
                                 document.getElementById("play").onclick=function () {
                                     document.getElementById("audio").play();
@@ -128,7 +129,7 @@ function openURL(url, name) {
                                 var rate = $("stepper").value / 10;
                                 $("web").eval(
                                     {
-                                        script: 'document.getElementById("audio").playbackRate=' + rate
+                                        script: 'setPlayRate('+rate+')'
                                     }
                                 )
                             }
