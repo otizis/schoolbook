@@ -93,26 +93,26 @@ function openURL(url, name) {
                     {
                         type: "web",
                         props: {
-                            html: "<audio id='audio' loop controls='controls' src='"+ data.data[0].url+"'></audio>"
+                            html: "<audio id='audio' autoplay loop controls='controls' src='"+ data.data[0].url+"'></audio>"
                                 +"<br><div class='c'><button id='play'>播放</button><button id='add'>加速</button><button id='cut'>降速</button></div>"
-                                + "<input type='number' id='rate' value='1'></input>",
+                                + "<p id='rate'>1</p>",
                             script: function () {
                                 var rateDom = document.getElementById("rate");
                                 function setPlayRate(rate) {
                                     document.getElementById("audio").playbackRate=rate;
-                                    rateDom.value=rate;
+                                    rateDom.innerText=rate;
                                 }
                                 document.getElementById("play").onclick=function () {
                                     document.getElementById("audio").play();
                                 }
                                 document.getElementById("add").onclick=function () {
-                                    setPlayRate(new Number(rate.value) + 0.1);
+                                    setPlayRate(new Number(rateDom.innerText) + 0.1);
                                 }
                                 document.getElementById("cut").onclick=function () {
-                                    setPlayRate(new Number(rate.value) - 0.1);
+                                    setPlayRate(new Number(rateDom.innerText) - 0.1);
                                 }
                             },
-                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}input{width:300px;height:20px;font-size:40px}"
+                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}p{font-size:40px}"
                         },
                         layout: $layout.fill
                     }        
