@@ -79,77 +79,80 @@ function render(programs) {
 }
 
 function openURL(url, name) {
-    $ui.push({
-        props: {
-            title: name
-        },
-        views: [
-            {
-                type: "web",
+    $http.get({
+        url: url,
+        handler: function (resp) {
+            var data = resp.data
+            $ui.push({
                 props: {
-                    html: "<audio style='width:100%;height:30px' id='audio' autoplay loop controls='controls'"
-                        + " src=''></audio>",
-                    script: function () {
-                        function setPlayRate(params) {
-                            document.getElementById("audio").playbackRate = params.rate;
+                    title: name
+                },
+                views: [
+                    {
+                        type: "web",
+                        props: {
+                            html: "<audio style='width:100%;height:30px' id='audio' autoplay loop controls='controls'"
+                                + " src='"+ data.data[0].url+"'></audio>",
+                            script: function () {
+                                function setPlayRate(params) {
+                                    document.getElementById("audio").playbackRate = params.rate;
+                                }
+                            }
+                        },
+                        layout: function (make, views) {
+                            make.top.equalTo(0);
+                            make.height.equalTo(200)
+                            make.width.equalTo(views.super)
                         }
-                        $http.get({
-                            url: url,
-                            handler: function (resp) {
-                                var data = resp.data
-                                document.getElementById("audio").src = data.data[0].url;
+                    },
+                    {
+                        type: "label",
+                        props: {
+                            text: "1",
+                            align: $align.left
+                        },
+                        layout: function (make, view) {
+                            make.left.equalTo(0)
+                            make.top.equalTo(240)
+                            make.width.equalTo(200);
+                            make.height.equalTo(100);
+                        }
+                    },
+                    {
+                        type: "stepper",
+                        props: {
+                            max: 20,
+                            min: 5,
+                            value: 10,
+                            step:2
+                        },
+                        layout: function (make, view) {
+                            make.left.equalTo(200);
+                            make.top.equalTo(240);
+                            make.width.equalTo(100);
+                            make.height.equalTo(100);
+                        },
+                        events: {
+                            changed: function (sender) {
+                                var rate = $("stepper").value / 10;
+                                $console.info(rate);
+                                $("label").text = rate + "";
+                                $("web").eval(
+                                    {
+                                        script: 'document.getElementById("audio").playbackRate=' + rate
+                                    }
+                                )
                             }
-                        })
+                        }
                     }
-                },
-                layout: function (make, views) {
-                    make.top.equalTo(0);
-                    make.height.equalTo(200)
-                    make.width.equalTo(views.super)
-                }
-            },
-            {
-                type: "label",
-                props: {
-                    text: "1",
-                    align: $align.center
-                },
-                layout: function (make, view) {
-                    make.left.equalTo(0)
-                    make.top.equalTo(240)
-                    make.width.equalTo(200);
-                    make.height.equalTo(200);
-                }
-            },
-            {
-                type: "stepper",
-                props: {
-                    max: 20,
-                    min: 5,
-                    value: 10
-                },
-                layout: function (make, view) {
-                    make.left.equalTo(100);
-                    make.top.equalTo(240);
-                    make.width.equalTo(200);
-                    make.height.equalTo(200);
-                },
-                events: {
-                    changed: function (sender) {
-                        var rate = $("stepper").value / 10;
-                        $console.info(rate);
-                        $("label").text = rate + "";
-                        $("web").eval(
-                            {
-                                script: 'document.getElementById("audio").playbackRate=' + rate
-                            }
-                        )
-                    }
-                }
-            }
-
-        ]
+        
+                ]
+            })
+        }
     })
+
+
+
 }
 
 var cache = $cache.get("programs")
