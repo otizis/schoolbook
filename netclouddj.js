@@ -88,11 +88,17 @@ $ui.render({
             type: "web",
             props: {
                 html: "<audio style='width:100%;height:30px' id='audio' autoplay loop controls='controls'"
-                    + " src='" + data.data[0].url + "'></audio>",
+                    + " src=''></audio>",
                 script: function () {
                     function setPlayRate(params) {
                         document.getElementById("audio").playbackRate = params.rate;
                     }
+                    $http.get({
+                        url: url,
+                        handler: function (resp) {
+                            var data = resp.data
+                            document.getElementById("audio").src = data.data[0].url;
+                        }
                 }
             },
             layout: function (make, views) {
@@ -101,6 +107,19 @@ $ui.render({
                 make.width.equalTo(views.super)
             }
         },
+        {
+            type: "label",
+            props: {
+              text: "1",
+              align: $align.center
+            },
+            layout: function(make, view) {
+              make.left.equalTo(0)
+              make.top.equalTo(240)
+              make.width.equalTo(200);
+              make.height.equalTo(200);
+            }
+          },
         {
             type: "stepper",
             props: {
@@ -118,7 +137,7 @@ $ui.render({
                 changed: function (sender) {
                     var rate = $("stepper").value / 10;
                     $console.info(rate);
-                    $("label").text=rate
+                    $("label").text= rate+"";
                     $("web").eval(
                         {
                             script: 'document.getElementById("audio").playbackRate=' + rate
@@ -126,20 +145,7 @@ $ui.render({
                     )
                 }
             }
-        },
-        {
-            type: "label",
-            props: {
-              text: "1",
-              align: $align.center
-            },
-            layout: function(make, view) {
-              make.left.equalTo(0)
-              make.top.equalTo(240)
-              make.width.equalTo(100);
-              make.height.equalTo(100);
-            }
-          }
+        }
 
     ]
     })
