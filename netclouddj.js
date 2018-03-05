@@ -52,7 +52,7 @@ $http.get({
 })
 function refetch() {
     $http.get({
-        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id=336355127",
+        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id=347923083",
         handler: function (resp) {
             render(resp.data.programs)
             $cache.set("programs", resp.data.programs)
@@ -91,12 +91,13 @@ function openURL(url, name) {
                     {
                         type: "web",
                         props: {
-                            html: "<audio id='audio' autoplay loop controls='controls'"
-                                + " src='"+ data.data[0].url+"'></audio><br><button id='play'>播放</button><br><span id='rate'>1</span>",
+                            html: "<audio id='audio' loop controls='controls' src='"+ data.data[0].url+"'></audio>"
+                                +"<br><button id='play'>播放</button>"
+                                + "<input type='number' id='rate' value='1'></input>",
                             script: function () {
                                 function setPlayRate(params) {
                                     document.getElementById("audio").playbackRate=params.rate;
-                                    document.getElementById("rate").innerText=params.rate;
+                                    document.getElementById("rate").value=params.rate;
                                 }
                                 document.getElementById("play").onclick=function () {
                                     document.getElementById("audio").play();
