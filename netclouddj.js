@@ -96,7 +96,7 @@ function openURL(url, name) {
                         props: {
                             html: "<html><head><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi' />"
                                 + "</head><body><audio id='audio' autoplay loop controls='controls' src='" + data.data[0].url + "'></audio>"
-                                + "<br><div class='c'><button id='play'>播放</button><button id='add(0.1)'>加速</button><button id='add(-0.1)'>降速</button></div>"
+                                + "<br><div class='c'><button id='play'>播放</button><button onclick='add(0.1)'>加速</button><button onclick='add(-0.1)'>降速</button></div>"
                                 + "播放速率：<p id='rate'>1</p></body></html>",
                             script: function () {
                                 var rateDom = document.getElementById("rate");
@@ -107,13 +107,13 @@ function openURL(url, name) {
                                 document.getElementById("play").onclick = function () {
                                     document.getElementById("audio").play();
                                 }
-                                document.getElementById("add").onclick = function (t) {
+                                function add(t) {
                                     var r = new Number(rateDom.innerText) + t;
                                     r = r.toFixed(2);
                                     setPlayRate(new Number(r));
                                 }
                             },
-                            style: ".c{padding-top:20%}button{width:100px;height:80px;font-size:30px}audio{width:100%;height:100px}p{font-size:40px}"
+                            style: ".c{padding-top:20%}button{width:120px;height:80px;font-size:30px}audio{width:100%;height:100px}p{font-size:40px}"
                         },
                         layout: $layout.fill
                     }
