@@ -91,13 +91,18 @@ function openURL(url, name) {
                     {
                         type: "web",
                         props: {
-                            html: "<audio style='width:100%;height:30px' id='audio' autoplay loop controls='controls'"
-                                + " src='"+ data.data[0].url+"'></audio>",
+                            html: "<audio id='audio' autoplay loop controls='controls'"
+                                + " src='"+ data.data[0].url+"'></audio><br><button id='play'>播放</button><br><span id='rate'>1</span>",
                             script: function () {
                                 function setPlayRate(params) {
                                     document.getElementById("audio").playbackRate = params.rate;
+                                    document.getElementById("rate").innerHTML = params.rate;
                                 }
-                            }
+                                document.getElementById("play").onclick=function () {
+                                    document.getElementById("audio").play();
+                                }
+                            },
+                            style: "button{width:100px;height:100px}audio{width:100%;height:30px}"
                         },
                         layout: function (make, views) {
                             make.top.equalTo(0);
@@ -106,37 +111,20 @@ function openURL(url, name) {
                         }
                     },
                     {
-                        type: "label",
-                        props: {
-                            text: "1",
-                            align: $align.left
-                        },
-                        layout: function (make, view) {
-                            make.left.equalTo(0)
-                            make.top.equalTo(240)
-                            make.width.equalTo(200);
-                            make.height.equalTo(100);
-                        }
-                    },
-                    {
                         type: "stepper",
                         props: {
                             max: 20,
-                            min: 5,
-                            value: 10,
-                            step:2
+                            min: 10,
+                            value: 12,
+                            step:1
                         },
                         layout: function (make, view) {
-                            make.left.equalTo(200);
+                            make.centerX.equalTo(view.super);
                             make.top.equalTo(240);
-                            make.width.equalTo(100);
-                            make.height.equalTo(100);
                         },
                         events: {
                             changed: function (sender) {
                                 var rate = $("stepper").value / 10;
-                                $console.info(rate);
-                                $("label").text = rate + "";
                                 $("web").eval(
                                     {
                                         script: 'document.getElementById("audio").playbackRate=' + rate
