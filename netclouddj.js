@@ -95,14 +95,14 @@ function openURL(url, name) {
                                 + " src='"+ data.data[0].url+"'></audio><br><button id='play'>播放</button><br><span id='rate'>1</span>",
                             script: function () {
                                 function setPlayRate(params) {
-                                    document.getElementById("audio").playbackRate = params.rate;
-                                    document.getElementById("rate").innerHTML = params.rate;
+                                    document.getElementById("audio").playbackRate=params.rate;
+                                    document.getElementById("rate").innerText=params.rate;
                                 }
                                 document.getElementById("play").onclick=function () {
                                     document.getElementById("audio").play();
                                 }
                             },
-                            style: "button{width:100px;height:100px}audio{width:100%;height:30px}"
+                            style: "button{width:400px;height:400px;font-size:30px}audio{width:100%;height:100px}span{font-size:30px}"
                         },
                         layout: function (make, views) {
                             make.top.equalTo(0);
