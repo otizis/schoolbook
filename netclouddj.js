@@ -36,7 +36,7 @@ $ui.render({
         layout: $layout.fill,
         events: {
             didSelect: function (tableView, indexPath) {
-                openURL(tableView.object(indexPath).url, tableView.object(indexPath).name)
+                openURL(tableView.object(indexPath).url, tableView.object(indexPath).label.text)
             },
             pulled: function (sender) {
                 refetch()
@@ -83,7 +83,8 @@ function openURL(url, name) {
     $http.get({
         url: url,
         handler: function (resp) {
-            var data = resp.data
+            var data = resp.data;
+            $console.info(data.data[0].url);
             $ui.push({
                 props: {
                     title: name
@@ -93,49 +94,28 @@ function openURL(url, name) {
                         type: "web",
                         props: {
                             html: "<audio id='audio' loop controls='controls' src='"+ data.data[0].url+"'></audio>"
-                                +"<br><button id='play'>播放</button>"
+                                +"<br><div class='c'><button id='play'>播放</button><button id='add'>加速</button><button id='cut'>降速</button></div>"
                                 + "<input type='number' id='rate' value='1'></input>",
                             script: function () {
+                                var rateDom = document.getElementById("rate");
                                 function setPlayRate(rate) {
                                     document.getElementById("audio").playbackRate=rate;
-                                    document.getElementById("rate").value=rate;
+                                    rateDom.value=rate;
                                 }
                                 document.getElementById("play").onclick=function () {
                                     document.getElementById("audio").play();
                                 }
+                                document.getElementById("add").onclick=function () {
+                                    setPlayRate(rate.value + 0.1);
+                                }
+                                document.getElementById("cut").onclick=function () {
+                                    setPlayRate(rate.value - 0.1);
+                                }
                             },
-                            style: "button{width:400px;height:400px;font-size:30px}audio{width:100%;height:100px}span{font-size:30px}"
+                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}input{width:60px;height:50px;font-size:50px}"
                         },
-                        layout: function (make, views) {
-                            make.top.equalTo(0);
-                            make.height.equalTo(200)
-                            make.width.equalTo(views.super)
-                        }
-                    },
-                    {
-                        type: "stepper",
-                        props: {
-                            max: 20,
-                            min: 10,
-                            value: 12,
-                            step:1
-                        },
-                        layout: function (make, view) {
-                            make.centerX.equalTo(view.super);
-                            make.top.equalTo(240);
-                        },
-                        events: {
-                            changed: function (sender) {
-                                var rate = $("stepper").value / 10;
-                                $("web").eval(
-                                    {
-                                        script: 'setPlayRate('+rate+')'
-                                    }
-                                )
-                            }
-                        }
-                    }
-        
+                        layout: $layout.fill
+                    }        
                 ]
             })
         }
