@@ -1,4 +1,5 @@
 $app.rotateDisabled = true;
+var lanmuId = 347923083;// 一发儿
 $ui.render({
     props: {
         title: "网易云电台陈一发"
@@ -53,7 +54,7 @@ $http.get({
 })
 function refetch() {
     $http.get({
-        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id=347923083",
+        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id="+lanmuId,
         handler: function (resp) {
             render(resp.data.programs)
             $cache.set("programs", resp.data.programs)
@@ -95,8 +96,8 @@ function openURL(url, name) {
                         props: {
                             html: "<html><head><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi' />"
                                 + "</head><body><audio id='audio' autoplay loop controls='controls' src='" + data.data[0].url + "'></audio>"
-                                + "<br><div class='c'><button id='play'>播放</button><button id='add'>加速</button><button id='cut'>降速</button></div>"
-                                + "<p id='rate'>1</p></body></html>",
+                                + "<br><div class='c'><button id='play'>播放</button><button id='add(0.1)'>加速</button><button id='add(-0.1)'>降速</button></div>"
+                                + "播放速率：<p id='rate'>1</p></body></html>",
                             script: function () {
                                 var rateDom = document.getElementById("rate");
                                 function setPlayRate(rate) {
@@ -106,14 +107,13 @@ function openURL(url, name) {
                                 document.getElementById("play").onclick = function () {
                                     document.getElementById("audio").play();
                                 }
-                                document.getElementById("add").onclick = function () {
-                                    setPlayRate(new Number(rateDom.innerText) + 0.1);
-                                }
-                                document.getElementById("cut").onclick = function () {
-                                    setPlayRate(new Number(rateDom.innerText) - 0.1);
+                                document.getElementById("add").onclick = function (t) {
+                                    var r = new Number(rateDom.innerText) + t;
+                                    r = r.toFixed(2);
+                                    setPlayRate(new Number(r));
                                 }
                             },
-                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}p{font-size:40px}"
+                            style: ".c{padding-top:20%}button{width:100px;height:80px;font-size:30px}audio{width:100%;height:100px}p{font-size:40px}"
                         },
                         layout: $layout.fill
                     }
@@ -121,9 +121,6 @@ function openURL(url, name) {
             })
         }
     })
-
-
-
 }
 
 var cache = $cache.get("programs")
