@@ -106,13 +106,13 @@ function openURL(url, name) {
                                     document.getElementById("audio").play();
                                 }
                                 document.getElementById("add").onclick=function () {
-                                    setPlayRate(rate.value + 0.1);
+                                    setPlayRate(new Number(rate.value) + 0.1);
                                 }
                                 document.getElementById("cut").onclick=function () {
-                                    setPlayRate(rate.value - 0.1);
+                                    setPlayRate(new Number(rate.value) - 0.1);
                                 }
                             },
-                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}input{width:60px;height:50px;font-size:50px}"
+                            style: ".c{padding-top:20%}button{width:300px;height:200px;font-size:30px}audio{width:100%;height:100px}input{width:300px;height:20px;font-size:40px}"
                         },
                         layout: $layout.fill
                     }        
