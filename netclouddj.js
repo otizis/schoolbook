@@ -113,7 +113,7 @@ function openURL(url, name) {
                                     setPlayRate(new Number(r));
                                 }
                             },
-                            style: ".c{padding-top:20%}button{width:110px;height:70px;font-size:30px}audio{width:100%;height:100px}span{font-size:40px}"
+                            style: ".c{padding-top:20%}button{width:110px;height:70px;font-size:20px}audio{width:100%;height:100px}span{font-size:40px}"
                         },
                         layout: $layout.fill
                     }
