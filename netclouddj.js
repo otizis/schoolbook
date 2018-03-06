@@ -1,8 +1,9 @@
 $app.rotateDisabled = true;
 var lanmuId = 347923083;// 一发儿
+var notStr = new Date().getTime();
 $ui.render({
     props: {
-        title: "网易云电台陈一发"
+        title: "网易云电台"
     },
     views: [{
         type: "list",
@@ -15,8 +16,8 @@ $ui.render({
                     id: "image"
                 },
                 layout: function (make, view) {
-                    make.left.top.bottom.inset(5)
-                    make.width.equalTo(view.height)
+                    make.left.top.bottom.inset(5);
+                    make.width.equalTo(view.height);
                 }
             },
             {
@@ -54,7 +55,7 @@ $http.get({
 })
 function refetch() {
     $http.get({
-        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id="+lanmuId,
+        url: "https://api.imjad.cn/cloudmusic/?type=djradio&id="+lanmuId+"&_t="+notStr,
         handler: function (resp) {
             render(resp.data.programs)
         }
@@ -66,7 +67,7 @@ function render(programs) {
     for (var idx in programs) {
         var program = programs[idx]
         data.push({
-            url: "https://api.imjad.cn/cloudmusic/?type=dj&id=" + program.id,
+            url: "https://api.imjad.cn/cloudmusic/?type=dj&id=" + program.id+"&_t="+notStr,
             image: {
                 src: program.coverUrl
             },
