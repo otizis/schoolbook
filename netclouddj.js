@@ -57,7 +57,6 @@ function refetch() {
         url: "https://api.imjad.cn/cloudmusic/?type=djradio&id="+lanmuId,
         handler: function (resp) {
             render(resp.data.programs)
-            $cache.set("programs", resp.data.programs)
         }
     })
 }
@@ -123,12 +122,4 @@ function openURL(url, name) {
         }
     })
 }
-
-var cache = $cache.get("programs")
-
-if (cache) {
-    render(cache)
-}
-
 refetch()
-
