@@ -1,21 +1,20 @@
 package com.dzsb.util.schoolbook.work;
 
-import com.dzsb.util.schoolbook.Constant;
-import com.dzsb.util.schoolbook.SchoolBookR;
+import com.dzsb.util.schoolbook.SchoolBookNode;
 import com.dzsb.util.schoolbook.SeqUtil;
 
 public class InitNodeIdWT extends WorkTree
 {
     
-    public void workMe(SchoolBookR r)
+    public void workMe(SchoolBookNode r)
     {
-        if (r.getNode_id() == 0)
+        if (r.getNodeId() == 0)
         {
-            if (r.getNode_id() != 0)
+            if (r.getNodeId() != 0)
             {
                 return;
             }
-            r.setNode_id(SeqUtil.getNextByType(r.getNode_type()));
+            r.setNodeId(SeqUtil.getNextByType(r.getNodeType()));
         }
     }
     

@@ -2,21 +2,21 @@ package com.dzsb.util.schoolbook.work;
 
 import java.util.List;
 
-import com.dzsb.util.schoolbook.SchoolBookR;
+import com.dzsb.util.schoolbook.SchoolBookNode;
 
 public abstract class WorkTree
 {
-    public void workMeAndChild(SchoolBookR r)
+    public void workMeAndChild(SchoolBookNode r)
     {
         workMe(r);
-        List<SchoolBookR> childs = r.getChilds();
-        for (SchoolBookR schoolBookR : childs)
+        List<SchoolBookNode> childs = r.getChilds();
+        for (SchoolBookNode schoolBookNode : childs)
         {
-            this.workMeAndChild(schoolBookR);
+            this.workMeAndChild(schoolBookNode);
         }
     }
     
-    public abstract void workMe(SchoolBookR r);
+    public abstract void workMe(SchoolBookNode r);
     
     public abstract void end();
 }

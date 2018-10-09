@@ -10,7 +10,7 @@ import org.apache.commons.io.FileUtils;
 import com.dzsb.util.schoolbook.AppMain;
 import com.dzsb.util.schoolbook.Constant;
 import com.dzsb.util.schoolbook.Dict;
-import com.dzsb.util.schoolbook.SchoolBookR;
+import com.dzsb.util.schoolbook.SchoolBookNode;
 import com.dzsb.util.schoolbook.SeqUtil;
 
 public class CreateSqlWT extends WorkTree
@@ -19,7 +19,7 @@ public class CreateSqlWT extends WorkTree
 
     public CreateSqlWT(String fileName)
     {
-        this.fileName = fileName+".sql";
+        this.fileName = fileName;
 
         String sql = "INSERT INTO `" + AppMain.dbName
             + "`.`t_schoolbook_content_r`(`node_id`,`parent_id`,`node_type`,`node_name`,`order_num`)VALUES";
@@ -40,17 +40,17 @@ public class CreateSqlWT extends WorkTree
         t_schoolbook_rs.add(sql);
     }
     
-    public void workMe(SchoolBookR r)
+    public void workMe(SchoolBookNode r)
     {
         String sql = "(<{node_id: }>,<{parent_id: }>,<{node_type: }>,'<{node_name: }>',<order_num>),";
-        sql = sql.replace("<{node_id: }>", r.getNode_id() + "");
-        sql = sql.replace("<{parent_id: }>", r.getParent_id() + "");
-        sql = sql.replace("<{node_type: }>", r.getNode_type() + "");
-        sql = sql.replace("<{node_name: }>", r.getNode_name());
+        sql = sql.replace("<{node_id: }>", r.getNodeId() + "");
+        sql = sql.replace("<{parent_id: }>", r.getParentId() + "");
+        sql = sql.replace("<{node_type: }>", r.getNodeType() + "");
+        sql = sql.replace("<{node_name: }>", r.getNodeName());
         sql = sql.replace("<order_num>", SeqUtil.getNextByType(Constant.BOOK_NODE_TYPE_ORDER_NUM)+"");
         addContentRs(sql);
         
-        if (r.getNode_type() == Constant.BOOK_NODE_TYPE_BOOK)
+        if (r.getNodeType() == Constant.BOOK_NODE_TYPE_BOOK)
         {
             addBookRs(this.initBookSql(r));
         }
@@ -63,17 +63,17 @@ public class CreateSqlWT extends WorkTree
      * @exception throws [违例类型] [违例说明]
      * @see [类、类#方法、类#成员]
      */
-    public String initBookSql(SchoolBookR r)
+    public String initBookSql(SchoolBookNode r)
     {
         String sql = "INSERT INTO `" + AppMain.dbName
             + "`.`t_schoolbook`(`schoolbook_id`,`schoolbook_name`,`item_publishing_id`,`item_subject_id`,`item_grade_id`,`item_volume_id`)VALUES"
             + "(<{schoolbook_id: }>,'<{schoolbook_name: }>',<{item_publishing_id: }>,<{item_subject_id: }>,<{item_grade_id: }>,<{item_volume_id: }>);";
-        sql = sql.replace("<{schoolbook_id: }>", r.getNode_id() + "");
-        sql = sql.replace("<{schoolbook_name: }>", r.getNode_name());
-        sql = sql.replace("<{item_publishing_id: }>", Dict.getPublishId(r.getNode_name()));
-        sql = sql.replace("<{item_subject_id: }>", Dict.getSubjectId(r.getNode_name()));
-        sql = sql.replace("<{item_grade_id: }>", Dict.getGradeId(r.getBookDesc()));
-        sql = sql.replace("<{item_volume_id: }>", Dict.getFacId(r));
+        sql = sql.replace("<{schoolbook_id: }>", r.getNodeId() + "");
+        sql = sql.replace("<{schoolbook_name: }>", r.getNodeName());
+        sql = sql.replace("<{item_publishing_id: }>", Dict.getPublishId(r.getDesc()));
+        sql = sql.replace("<{item_subject_id: }>", Dict.getSubjectId(r.getDesc()));
+        sql = sql.replace("<{item_grade_id: }>", Dict.getGradeId(r.getDesc()));
+        sql = sql.replace("<{item_volume_id: }>", Dict.getFacId(r.getDesc()));
         return sql;
         
     }

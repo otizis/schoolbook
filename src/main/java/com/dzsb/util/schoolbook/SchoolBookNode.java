@@ -3,49 +3,49 @@ package com.dzsb.util.schoolbook;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchoolBookR
+public class SchoolBookNode
 {
     // 子节点
-    private List<SchoolBookR> childs = new ArrayList<SchoolBookR>();
-    
+    private List<SchoolBookNode> childs = new ArrayList<SchoolBookNode>();
+
     // 初始化时，设置该节点的直接点应该是什么开头的，是自己的开头加一个+号
     // 比如自己是+号开头的，那应该设置++作为此字段
     private String childStartwith;
-    
-    // 节点id
+
+    /**
+     * 节点id
+     */
+
     private int node_id;
-    
+
     private int order_num;
-    // 节点名称
+    /**
+     * 节点名称
+     */
+
     private String node_name;
-    
-    // 父节点
-    private SchoolBookR parent;
-    
-    // 书本的描述，只存在于书本节点
-    private BookDescBean bookDesc = new BookDescBean();
-    
-    public BookDescBean getBookDesc()
-    {
-        return bookDesc;
-    }
 
-    public void setBookDesc(BookDescBean bookDesc)
-    {
-        bookDesc.setNum(bookDesc.getNum() + 1);
-        bookDesc.setFirstBookId(this.node_id);
-        this.bookDesc = bookDesc;
-    }
+    /**
+     * 额外描述信息，用€€分隔。如果没有分隔符，使用本行内容作为描述<br/>
+     * 描述用于最后sql输出时匹配字典项，需要每本书列明，出版社，年级，上下册，科目。一一对应。
+     */
+    private String desc;
 
-    public SchoolBookR()
+    /**
+     * 父节点
+     */
+    private SchoolBookNode parent;
+
+
+    public SchoolBookNode()
     {
         super();
     }
 
-    public SchoolBookR(String node_name,SchoolBookR parent)
+    public SchoolBookNode(String nodeName, SchoolBookNode parent)
     {
         super();
-        this.node_name = node_name;
+        this.node_name = nodeName;
         this.parent = parent;
     }
 
@@ -62,21 +62,21 @@ public class SchoolBookR
                 throw new RuntimeException();
             }
             // 如果和自己下一层节点还要深，交给自己的最后一个子节点处理
-            SchoolBookR schoolBookR = childs.get(childs.size() - 1);
-            schoolBookR.addChild(string);
+            SchoolBookNode schoolBookNode = childs.get(childs.size() - 1);
+            schoolBookNode.addChild(string);
         }
         else
         {
             // 新节点
-            SchoolBookR schoolBookR = new SchoolBookR();
-            schoolBookR.setNode_name(string);
-            schoolBookR.setChildStartwith(childStartwith + "+");
-            schoolBookR.parent = this;
-            childs.add(schoolBookR);
-            
+            SchoolBookNode schoolBookNode = new SchoolBookNode();
+            schoolBookNode.setNodeName(string);
+            schoolBookNode.setChildStartwith(childStartwith + "+");
+            schoolBookNode.parent = this;
+            childs.add(schoolBookNode);
+
         }
     }
-    
+
     /**
      * @return 返回 childStartwith
      */
@@ -84,27 +84,27 @@ public class SchoolBookR
     {
         return childStartwith;
     }
-    
+
     /**
      * @return 返回 node_id
      */
-    public int getNode_id()
+    public int getNodeId()
     {
         return node_id;
     }
-    
+
     /**
      * @return 返回 node_name
      */
-    public String getNode_name()
+    public String getNodeName()
     {
         return node_name.replaceAll("'", "\\\\'");
     }
-    
+
     /**
      * @return 返回 node_type 节点类型，只有书本的节点类型是固定的，其他的类型需要根据是否有子节点判断是否是52末端。 否则按照书、单元、章、节下沉
      */
-    public int getNode_type()
+    public int getNodeType()
     {
         if (parent == null)
         {
@@ -114,13 +114,13 @@ public class SchoolBookR
         {
             return Constant.BOOK_NODE_TYPE_FOOT;
         }
-        return parent.getNode_type() + 1;
+        return parent.getNodeType() + 1;
     }
-    
+
     /**
      * @return 返回 parent_id
      */
-    public int getParent_id()
+    public int getParentId()
     {
         if (parent == null)
         {
@@ -128,39 +128,42 @@ public class SchoolBookR
         }
         return parent.node_id;
     }
-    
-    public int getOrderNum(){
+
+    public int getOrderNum()
+    {
         return this.order_num;
     }
-    public void setOrderNum(int orderNum){
+
+    public void setOrderNum(int orderNum)
+    {
         this.order_num = orderNum;
     }
-    
+
     /**
-     * @param 对childStartwith进行赋值
+     * @param childStartwith 对childStartwith进行赋值
      */
     public void setChildStartwith(String childStartwith)
     {
         this.childStartwith = childStartwith;
     }
-    
+
     /**
-     * @param 对node_id进行赋值
+     * @param nodeId 对node_id进行赋值
      */
-    public void setNode_id(int node_id)
+    public void setNodeId(int nodeId)
     {
-        this.node_id = node_id;
+        this.node_id = nodeId;
     }
-    
+
     /**
-     * @param 对node_name进行赋值
+     * @param nodeName 对node_name进行赋值
      */
-    public void setNode_name(String node_name)
+    public void setNodeName(String nodeName)
     {
-        node_name = node_name.replaceAll("\\+", "").trim();
-        this.node_name = node_name;
+        nodeName = nodeName.replaceAll("\\+", "").trim();
+        this.node_name = nodeName;
     }
-    
+
     /**
      * @return
      */
@@ -171,9 +174,9 @@ public class SchoolBookR
         builder.append("SchoolBookR [node_id=");
         builder.append(node_id);
         builder.append(", parent_id=");
-        builder.append(getParent_id());
+        builder.append(getParentId());
         builder.append(", node_type=");
-        builder.append(getNode_type());
+        builder.append(getNodeType());
         builder.append(", node_name=");
         builder.append(node_name);
         builder.append(", childStartwith=");
@@ -183,15 +186,24 @@ public class SchoolBookR
         builder.append("]");
         return builder.toString();
     }
-    
-    public List<SchoolBookR> getChilds()
+
+    public List<SchoolBookNode> getChilds()
     {
         return childs;
     }
-    
-    public void setChilds(List<SchoolBookR> childs)
+
+    public void setChilds(List<SchoolBookNode> childs)
     {
         this.childs = childs;
     }
-    
+
+    public String getDesc()
+    {
+        return desc;
+    }
+
+    public void setDesc(String desc)
+    {
+        this.desc = desc;
+    }
 }

@@ -21,42 +21,20 @@ public class Dict
     
     private static String[] facId = new String[] {"10301", "10302", "10303"};
     
-    public static String getGradeId(BookDescBean desc)
+    public static String getGradeId(String string)
     {
-        return get(grade, gradeId, desc.getDesc());
+        return get(grade, gradeId, string);
     }
-    
+    public static String getFacId(String string)
+    {
+        return get(fac, facId, string);
+    }
     public static String getSubjectId(String string)
     {
         return get(subject, subjectId, string);
     }
     
-    public static String getFacId(SchoolBookR r)
-    {
-        String ff = get(fac, facId, r.getNode_name());
-        if (ff != "-1")
-        {
-            return ff;
-        }
-        BookDescBean bookDesc = r.getBookDesc();
-        if (bookDesc.isOneFac())
-        {
-            return get(fac, facId, fac[2]);
-        }
-        else
-        {
-            // 根据书本id来判断是否是上下册
-            if (r.getNode_id() == bookDesc.firstBookId)
-            {
-                return get(fac, facId, fac[0]);
-            }
-            else
-            {
-                return get(fac, facId, fac[1]);
-            }
-        }
-    }
-    
+
     public static String getPublishId(String string)
     {
         return get(publish, publishId, string);
@@ -70,7 +48,7 @@ public class Dict
         }
         for (int i = 0; i < name.length; i++)
         {
-            if (string.indexOf(name[i]) != -1)
+            if (string.contains(name[i]))
             {
                 return id[i];
             }

@@ -1,34 +1,40 @@
 package com.dzsb.util.schoolbook.work;
 
-import java.util.List;
-
 import com.dzsb.util.schoolbook.Constant;
-import com.dzsb.util.schoolbook.SchoolBookR;
+import com.dzsb.util.schoolbook.SchoolBookNode;
+
+import java.util.List;
 
 public class AddOtherChapterWT extends WorkTree
 {
     @Override
-    public void workMe(SchoolBookR r)
+    public void workMe(SchoolBookNode r)
     {
-        if (r.getNode_type() == Constant.BOOK_NODE_TYPE_BOOK)
+        if (r.getNodeType() == Constant.BOOK_NODE_TYPE_BOOK)
         {
-            List<SchoolBookR> childs = r.getChilds();
-            SchoolBookR fxk = new SchoolBookR("复习课", r);
+            List<SchoolBookNode> childs = r.getChilds();
+            SchoolBookNode fxk = new SchoolBookNode("复习课", r);
             childs.add(fxk);
-            
-            List<SchoolBookR> fxkChild = fxk.getChilds();
-            fxkChild.add(new SchoolBookR("单元复习", fxk));
-            fxkChild.add(new SchoolBookR("阶段性复习", fxk));
-            fxkChild.add(new SchoolBookR("期中复习", fxk));
-            fxkChild.add(new SchoolBookR("期末复习", fxk));
-            fxkChild.add(new SchoolBookR("其他", fxk));
+
+            List<SchoolBookNode> fxkChild = fxk.getChilds();
+            fxkChild.add(new SchoolBookNode("单元复习", fxk));
+            fxkChild.add(new SchoolBookNode("阶段性复习", fxk));
+            fxkChild.add(new SchoolBookNode("期中复习", fxk));
+            fxkChild.add(new SchoolBookNode("期末复习", fxk));
+            fxkChild.add(new SchoolBookNode("其他", fxk));
+        }
+        else if (r.getNodeType() == Constant.BOOK_NODE_TYPE_UNIT)
+        {
+            List<SchoolBookNode> childs = r.getChilds();
+            SchoolBookNode fxk = new SchoolBookNode("单元复习课", r);
+            childs.add(fxk);
         }
     }
-    
+
     @Override
     public void end()
     {
         // TODO Auto-generated method stub
-        
+
     }
 }
