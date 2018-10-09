@@ -13,19 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 预处理，将excel考到文本中，替换tab为+号 导入文本，一行一个节点名，子节点增加一个+号,如下： <br/>
- * +开头为节点，数量表示层级，确保教材为第一级 <br/>
- * -开头为注释，不解析 <br/>
- * 没有字符开头的为科目，年级说明
+ * 处理树形文本，结构如下： <br/>
+ * +开头为节点，+号的数量表示层级，一个+号表示书本名称，++表示书本下的子节点 <br/>
+ * 不以+开头为注释，不解析跳过 <br/>
+ * 每一行可以使用€€最为分隔说明，若书本名称不能包括（出版社，年级，上下册，科目),需要在说明内注明，如 <br/>
+ * <code>
+ * +数学三年级(上)2018€€人教版，数学，三年级，上册 <br/>
+ * ++第一单元：时、分、秒 <br/>
+ * +++第1课时：秒的认识 <br/>
+ * +++第2课时：时间的计算 <br/>
+ * ++第二单元：万以内的加法和减法（一） <br/>
+ * </code>
  */
 public class AppMain
 {
     public static String dbName = "shangxue-db";
 
-    /**
-     * 教材前面的+号数量,可以用来统一下降
-     */
-    public static int plusNumBeforeBook = 1;
 
     public static void main(String[] args) throws IOException
     {
@@ -81,34 +84,26 @@ public class AppMain
         {
             string = string.trim();
 
-            if (string.startsWith("-"))
+            if (string.startsWith("+"))
+            {
+                string = string.substring(1);
+            }
+            else
             {
                 // 注释
                 System.out.println("跳过注释" + string);
                 continue;
             }
-            else if (string.startsWith("+"))
-            {
-                // 用来统一降一级
-                string = string.substring(plusNumBeforeBook);
-            }
-            else
-            {
-                continue;
-            }
 
-            // 识别到一本书
+            // 一个+号表示一本书，截取一个+后，没有+号表示识别到一本新书
             if (!string.startsWith("+"))
             {
-                // 新书
                 schoolBookNode = new SchoolBookNode();
-
-                String nodeName = null;
                 if (string.contains("€€"))
                 {
-                    nodeName = string.split("€€")[0];
-                    schoolBookNode.setNodeName(nodeName);
-                    schoolBookNode.setDesc(string.split("€€")[1]);
+                    String[] split = string.split("€€");
+                    schoolBookNode.setNodeName(split[0]);
+                    schoolBookNode.setDesc(split[1]);
                 }
                 else
                 {
