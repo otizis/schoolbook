@@ -32,9 +32,9 @@ public class AppMain
 
     public static void main(String[] args) throws IOException
     {
-
+        String filename = "zxxk20190117.txt";
         // 读取导入文本
-        List<String> readLines = FileUtils.readLines(new File("new.txt"), Charset.forName("UTF8"));
+        List<String> readLines = FileUtils.readLines(new File(filename), Charset.forName("UTF8"));
         List<SchoolBookNode> bookList = readFile2Tree(readLines);
 
         // 添加其他固定章节
@@ -59,7 +59,7 @@ public class AppMain
             work.workMeAndChild(r);
         }
         // 组成sql语句
-        work = new CreateSqlWT("new.sql");
+        work = new CreateSqlWT(filename+".sql");
         for (SchoolBookNode r : bookList)
         {
             work.workMeAndChild(r);

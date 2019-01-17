@@ -13,9 +13,9 @@ public class Dict
     private static String[] gradeId = new String[] {"10101", "10102", "10103", "10104", "10105", "10106", "10107",
         "10108", "10109", "10110", "10111", "10112",};
     
-    private static String[] publish = new String[] {"人教版", "人教pep版", "沪粤版", "川教版", "北师大版",};
+    private static String[] publish = new String[] {"人教版", "人教pep版", "沪粤版", "川教版", "北师大版","冀教版","仁爱版",};
     
-    private static String[] publishId = new String[] {"10201", "10202", "10203", "10204", "10205",};
+    private static String[] publishId = new String[] {"10201", "10202", "10203", "10204", "10205","10206","10207",};
     
     private static String[] fac = new String[] {"上册", "下册", "全一册"};
     
