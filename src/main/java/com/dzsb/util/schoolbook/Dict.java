@@ -2,10 +2,10 @@ package com.dzsb.util.schoolbook;
 
 public class Dict
 {
-    private static String[] subject = new String[] {"语文", "数学", "英语", "历史", "政治", "地理", "生物", "化学", "物理", "思想品德",};
+    private static String[] subject = new String[] {"语文", "数学", "英语", "历史", "政治", "地理", "生物", "化学", "物理", "思想品德","体育",};
     
     private static String[] subjectId = new String[] {"10001", "10002", "10003", "10004", "10005", "10006", "10007",
-        "10008", "10009", "10010",};
+        "10008", "10009", "10010","10015"};
     
     private static String[] grade = new String[] {"一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级", "高一",
         "高二", "高三",};

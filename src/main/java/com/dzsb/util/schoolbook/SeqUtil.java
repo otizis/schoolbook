@@ -13,35 +13,35 @@ public class SeqUtil
     /**
      * 课本的现有最大id
      */
-    public static int type1_min = 181;
+    public static int type1_min = 0;
     
     /**
      * <b> 运行前需要查询最新的值</b>
      * <code>SELECT max(node_id),node_type FROM t_schoolbook_content_r group by node_type;</code>
      * 2类别数据库中最大的值，作为新增用的最小值
      */
-    public static int type2_min = 10796;
+    public static int type2_min = 0;
     
     /**
      * <b>运行前需要查询最新的值</b>
      * <code>SELECT max(node_id),node_type FROM t_schoolbook_content_r group by node_type;</code>
      * 3类别数据库中最大的值，作为新增用的最小值
      */
-    public static int type3_min = 100138;
+    public static int type3_min = 0;
     
     /**
      * <b> 运行前需要查询最新的值</b>
      * <code>SELECT max(node_id),node_type FROM t_schoolbook_content_r group by node_type;</code>
      * 52类别数据库中最大的值，作为新增用的最小值
      */
-    public static int type52_min = 1005638;
+    public static int type52_min = 0;
     
     /**
      * <b> 运行前需要查询最新的值</b>
      * <code>SELECT max(order_num) FROM t_schoolbook_content_r ;</code>
      * 排序id
      */
-    public static int type_order_num_min = 6735;
+    public static int type_order_num_min = 0;
     
     /**
      * 累加计数

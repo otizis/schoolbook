@@ -32,7 +32,14 @@ public class AppMain
 
     public static void main(String[] args) throws IOException
     {
-        String filename = "zxxk20190117.txt";
+        String filename = "tiyu.txt";
+        //SELECT max(node_id),node_type FROM t_schoolbook_content_r group by node_type;
+        SeqUtil.type1_min=224;
+        SeqUtil.type2_min=11020;
+        SeqUtil.type3_min=100329;
+        SeqUtil.type52_min=1007706;
+        //SELECT max(order_num) FROM t_schoolbook_content_r
+        SeqUtil.type_order_num_min=9261;
         // 读取导入文本
         List<String> readLines = FileUtils.readLines(new File(filename), Charset.forName("UTF8"));
         List<SchoolBookNode> bookList = readFile2Tree(readLines);
