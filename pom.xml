@@ -5,7 +5,19 @@
   <groupId>com.dzsb.util</groupId>
   <artifactId>schoolbook</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <packaging>jar</packaging>
 
   <name>schoolbook</name>
   <url>http://maven.apache.org</url>
@@ -28,10 +40,38 @@
 	    <version>2.4</version>
 	</dependency>
       <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.4</version>
+      </dependency>
+      
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi</artifactId>
+          <version>4.1.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml</artifactId>
+          <version>4.1.2</version>
+      </dependency>
+
+      <dependency>
           <groupId>com.squareup.okhttp3</groupId>
           <artifactId>okhttp</artifactId>
           <version>3.9.1</version>
       </dependency>
+      <dependency>
+          <groupId>com.squareup.okhttp3</groupId>
+          <artifactId>okhttp-urlconnection</artifactId>
+          <version>3.9.1</version>
+      </dependency>
+      <dependency>
+          <groupId>cn.hutool</groupId>
+          <artifactId>hutool-all</artifactId>
+          <version>5.6.6</version>
+      </dependency>
+
       <dependency>
           <groupId>com.alibaba</groupId>
           <artifactId>fastjson</artifactId>
@@ -42,5 +82,17 @@
           <artifactId>lombok</artifactId>
           <version>1.16.22</version>
       </dependency>
+      <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+      <dependency>
+          <groupId>net.coobird</groupId>
+          <artifactId>thumbnailator</artifactId>
+          <version>0.4.8</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.13.1</version>
+      </dependency>
+
   </dependencies>
 </project>

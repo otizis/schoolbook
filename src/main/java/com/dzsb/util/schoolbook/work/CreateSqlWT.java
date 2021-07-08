@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 
@@ -21,8 +22,9 @@ public class CreateSqlWT extends WorkTree
     {
         this.fileName = fileName;
 
-        String sql = "INSERT INTO `" + AppMain.dbName
-            + "`.`t_schoolbook_content_r`(`node_id`,`parent_id`,`node_type`,`node_name`,`order_num`)VALUES";
+        String sql = "INSERT INTO `t_permission` "
+                + "(`uuid`,`name`, `perm_type`, `group_id`, `parent_uuid`, `root_uuid`, `is_default`,`create_at`, `creator_id`) " +
+                "VALUES ";
         t_schoolbook_content_r_rs.add(sql);
     }
     
@@ -39,15 +41,15 @@ public class CreateSqlWT extends WorkTree
     {
         t_schoolbook_rs.add(sql);
     }
-    
+
+    @Override
     public void workMe(SchoolBookNode r)
     {
-        String sql = "(<{node_id: }>,<{parent_id: }>,<{node_type: }>,'<{node_name: }>',<order_num>),";
-        sql = sql.replace("<{node_id: }>", r.getNodeId() + "");
-        sql = sql.replace("<{parent_id: }>", r.getParentId() + "");
-        sql = sql.replace("<{node_type: }>", r.getNodeType() + "");
-        sql = sql.replace("<{node_name: }>", r.getNodeName());
-        sql = sql.replace("<order_num>", SeqUtil.getNextByType(Constant.BOOK_NODE_TYPE_ORDER_NUM)+"");
+        String sql = "('<{uuid: }>','<{name: }>',3,1,'<{parent_uuid: }>','<{root_uuid: }>',1,'2021-05-25 14:49:37',1),";
+        sql = sql.replace("<{uuid: }>", r.getNodeId()+"");
+        sql = sql.replace("<{name: }>", r.getNodeName());
+        sql = sql.replace("<{parent_uuid: }>", r.getParentId() + "");
+        sql = sql.replace("<{root_uuid: }>",  "");
         addContentRs(sql);
         
         if (r.getNodeType() == Constant.BOOK_NODE_TYPE_BOOK)

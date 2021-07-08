@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 处理树形文本，结构如下： <br/>
@@ -32,7 +33,7 @@ public class AppMain
 
     public static void main(String[] args) throws IOException
     {
-        String filename = "tiyu.txt";
+        String filename = "运营平台菜单.txt";
         //SELECT max(node_id),node_type FROM t_schoolbook_content_r group by node_type;
         SeqUtil.type1_min=224;
         SeqUtil.type2_min=11020;
@@ -55,11 +56,11 @@ public class AppMain
         }
         work.end();
 
-        work = new AddOtherChapterWT();
-        for (SchoolBookNode r : bookList)
-        {
-            work.workMeAndChild(r);
-        }
+//        work = new AddOtherChapterWT();
+//        for (SchoolBookNode r : bookList)
+//        {
+//            work.workMeAndChild(r);
+//        }
         work = new InitNodeIdWT();
         for (SchoolBookNode r : bookList)
         {
@@ -118,8 +119,8 @@ public class AppMain
                     schoolBookNode.setDesc(string);
                 }
 
-                Integer nodeId = SeqUtil.getNextByType(Constant.BOOK_NODE_TYPE_BOOK);
-                schoolBookNode.setNodeId(nodeId);
+//                Integer nodeId = SeqUtil.getNextByType(Constant.BOOK_NODE_TYPE_BOOK);
+                schoolBookNode.setNodeId(UUID.randomUUID().toString().replace("-",""));
                 schoolBookNode.setChildStartwith("+");
                 bookList.add(schoolBookNode);
                 continue;

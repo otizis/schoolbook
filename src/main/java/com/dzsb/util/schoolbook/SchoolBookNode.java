@@ -16,7 +16,7 @@ public class SchoolBookNode
      * 节点id
      */
 
-    private int node_id;
+    private String node_id;
 
     private int order_num;
     /**
@@ -88,7 +88,7 @@ public class SchoolBookNode
     /**
      * @return 返回 node_id
      */
-    public int getNodeId()
+    public String getNodeId()
     {
         return node_id;
     }
@@ -120,11 +120,11 @@ public class SchoolBookNode
     /**
      * @return 返回 parent_id
      */
-    public int getParentId()
+    public String getParentId()
     {
         if (parent == null)
         {
-            return 0;
+            return null;
         }
         return parent.node_id;
     }
@@ -150,7 +150,7 @@ public class SchoolBookNode
     /**
      * @param nodeId 对node_id进行赋值
      */
-    public void setNodeId(int nodeId)
+    public void setNodeId(String nodeId)
     {
         this.node_id = nodeId;
     }
